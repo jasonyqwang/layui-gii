@@ -1,0 +1,17 @@
+{
+    "name": "jsyqw/layui-gii",
+    "description": "基于Yii2矿框架，通过gii生成layui布局",
+    "type": "yii2-extension",
+    "authors": [
+        {
+            "name": "Jason Wang",
+            "email": "1045643440@qq.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Jsyqw\\Layuigii\\": "src/"
+        }
+    }
+}

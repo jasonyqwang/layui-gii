@@ -5,7 +5,9 @@
  */
 namespace Jsyqw\Layuigii;
 
-class Test
+class ComposerTest
 {
-
+    public static function test(){
+        return date('Y-m-d H:i:s');
+    }
 }

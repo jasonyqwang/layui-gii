@@ -17,7 +17,7 @@
 echo "<?php\n";
 ?>
 
-namespace <?= $generator->ns ?>;
+namespace <?= $generator->ns ?>\base;
 
 use Yii;
 
@@ -34,7 +34,7 @@ use Yii;
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
+class <?= $baseModelClass ?> extends <?= '\\' . ltrim($className, '\\') . "\n" ?>
 {
     /**
      * {@inheritdoc}

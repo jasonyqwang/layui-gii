@@ -130,7 +130,7 @@ class Generator extends \yii\gii\Generator
                 will be generated, one for each matching table name; and the class names will be generated from
                 the matching characters. For example, table <code>tbl_post</code> will generate <code>Post</code>
                 class.',
-            'baseModelClass' => '基础模型.',
+            'baseModelClass' => '基础模型，比如 BaseUser.',
             'modelClass' => 'This is the name of the ActiveRecord class to be generated. The class name should not contain
                 the namespace part as it is specified in "Namespace". You do not need to specify the class name
                 if "Table Name" ends with asterisk, in which case multiple ActiveRecord classes will be generated.',
@@ -224,7 +224,7 @@ class Generator extends \yii\gii\Generator
         foreach ($this->getTableNames() as $tableName) {
             // model :
             $modelClassName = $this->generateClassName($tableName);
-            $baseModelClass = 'Base'.$modelClassName;
+            $baseModelClass = $this->baseModelClass;
             $queryClassName = ($this->generateQuery) ? $this->generateQueryClassName($modelClassName) : false;
             $tableSchema = $db->getTableSchema($tableName);
             $params = [
@@ -239,7 +239,7 @@ class Generator extends \yii\gii\Generator
                 'relations' => isset($relations[$tableName]) ? $relations[$tableName] : [],
             ];
             $files[] = new CodeFile(
-                Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
+                Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/base/' . $baseModelClass . '.php',
                 $this->render('base-model.php', $params)
             );
 

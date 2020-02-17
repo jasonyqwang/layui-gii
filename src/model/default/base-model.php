@@ -34,7 +34,7 @@ use Yii;
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?= $baseModelClass ?> extends <?= '\\' . ltrim($className, '\\') . "\n" ?>
+class <?= $baseModelClass ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
     /**
      * {@inheritdoc}

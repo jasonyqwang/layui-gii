@@ -60,4 +60,32 @@ eg：
 ```
 
 
+## 项目配置
 
+在 Yii 的配置文件中，添加如下配置
+
+```php
+    ...
+    $config['modules']['gii'] = [
+            'class' => 'yii\gii\Module',
+            // uncomment the following to add your IP if you are not connecting from localhost.
+            //'allowedIPs' => ['127.0.0.1', '::1'],
+            'generators' => [
+                'crud' => [ //生成器名称
+                    'class' => 'Jsyqw\Layuigii\crud\Generator',
+                    'templates' => [ //设置我们自己的模板
+                        //模板名 => 模板路径
+                        'layuiCrud' => '@vendor/layui-gii/src/crud/default',
+                    ]
+                ],
+                'model' => [ //生成器名称
+                    'class' => 'Jsyqw\Layuigii\model\Generator',
+                    'templates' => [ //设置我们自己的模板
+                        //模板名 => 模板路径
+                        'layuiModel' => '@vendor/layui-gii/src/model/default',
+                    ]
+                ]
+            ],
+        ];
+    ...
+```

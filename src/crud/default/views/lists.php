@@ -27,11 +27,15 @@
             layer = parent.layer === undefined ? layui.layer : top.layer,
             $ = layui.jquery,
             table = layui.table;
+        var searchWhere = {
+            key: $(".searchVal").val()
+        };
 
         //列表
         var tableIns = table.render({
             elem: '#list',
             url : 'lists',
+            where: searchWhere,
             cellMinWidth : 95,
             page : true,
             height : "full-125",
@@ -76,9 +80,7 @@ ITEM;
                 page: {
                     curr: 1 //重新从第 1 页开始
                 },
-                where: {
-                    key: $(".searchVal").val()  //搜索的关键字
-                }
+                where: searchWhere
             })
         });
 
@@ -106,14 +108,14 @@ ITEM;
         //修改
         function edit(id){
             var index = layui.layer.open({
-                title : "添加用户",
+                title : "修改",
                 type : 2,
                 area: DEFAULT_DIALOG_MID_AREA,
                 content : "edit?id="+id,
                 success : function(layero, index){
                     var body = layui.layer.getChildFrame('body', index);
                     setTimeout(function(){
-                        layui.layer.tips('点击此处返回用户列表', '.layui-layer-setwin .layui-layer-close', {
+                        layui.layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
                             tips: 3
                         });
                     },500)

@@ -2,7 +2,6 @@
 /* @var $className string class name */
 echo "<?php\n";
 ?>
-
 namespace <?= $generator->ns ?>;
 
 use Yii;

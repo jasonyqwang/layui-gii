@@ -75,7 +75,10 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     public function actionCreate()
     {
         if(!RequestHelper::instance()->isAjax){
-            return $this->render('create');
+            $model = new <?= $modelClass ?>();
+            return $this->render('create',[
+                'model' => $model
+            ]);
         }
         $data = RequestHelper::post();
         //$data['create_time'] = time();

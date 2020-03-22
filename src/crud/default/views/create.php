@@ -21,7 +21,7 @@ if (empty($safeAttributes)) {
         <div class="layui-form-item layui-row layui-col-xs12">
             <label class="layui-form-label">$label</label>
             <div class="layui-input-block">
-                <input name="$attribute" type="text" class="layui-input" lay-verify="" autocomplete="off"  placeholder="请输入$label">
+                <input name="$attribute" type="text" class="layui-input" lay-verify="" value="<?= \$model->$attribute ?>" autocomplete="off"  placeholder="请输入$label">
             </div>
         </div>
 ITEM;

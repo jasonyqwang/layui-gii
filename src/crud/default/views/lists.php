@@ -27,15 +27,12 @@
             layer = parent.layer === undefined ? layui.layer : top.layer,
             $ = layui.jquery,
             table = layui.table;
-        var searchWhere = {
-            key: $(".searchVal").val()
-        };
 
         //列表
         var tableIns = table.render({
             elem: '#list',
             url : 'lists',
-            where: searchWhere,
+            where: searchWhere(),
             cellMinWidth : 95,
             page : true,
             height : "full-125",
@@ -80,9 +77,14 @@ ITEM;
                 page: {
                     curr: 1 //重新从第 1 页开始
                 },
-                where: searchWhere
+                where: searchWhere()
             })
         });
+        function searchWhere(){
+            return {
+                key: $(".searchVal").val(),
+            };
+        }
 
         //添加
         function add(){

@@ -224,7 +224,11 @@ class Generator extends \yii\gii\Generator
         foreach ($this->getTableNames() as $tableName) {
             // model :
             $modelClassName = $this->generateClassName($tableName);
-            $baseModelClass = $this->baseModelClass;
+            if (strpos($this->tableName, '*') !== false){
+                $baseModelClass = 'Base'.$modelClassName;
+            }else{
+                $baseModelClass = $this->baseModelClass;
+            }
             $queryClassName = ($this->generateQuery) ? $this->generateQueryClassName($modelClassName) : false;
             $tableSchema = $db->getTableSchema($tableName);
             $params = [

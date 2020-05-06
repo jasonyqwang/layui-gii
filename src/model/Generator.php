@@ -227,6 +227,10 @@ class Generator extends \yii\gii\Generator
             if (strpos($this->tableName, '*') !== false){
                 $baseModelClass = 'Base'.$modelClassName;
             }else{
+                //如果没有填写 base model
+                if(!$this->baseModelClass){
+                    $this->baseModelClass = 'Base'.$modelClassName;
+                }
                 $baseModelClass = $this->baseModelClass;
             }
             $queryClassName = ($this->generateQuery) ? $this->generateQueryClassName($modelClassName) : false;

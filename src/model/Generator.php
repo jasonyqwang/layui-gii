@@ -34,11 +34,11 @@ class Generator extends \yii\gii\Generator
     public $tableName;
     public $baseModelClass;
     public $modelClass;
-    public $baseClass = 'yii\db\ActiveRecord';
+    public $baseClass = 'app\core\BaseActiveRecord';
     public $generateRelations = self::RELATIONS_ALL;
-    public $generateRelationsFromCurrentSchema = true;
-    public $generateLabelsFromComments = false;
-    public $useTablePrefix = false;
+    public $generateRelationsFromCurrentSchema = false;
+    public $generateLabelsFromComments = true;
+    public $useTablePrefix = true; //使用表前缀
     public $standardizeCapitals = false;
     public $singularize = false;
     public $useSchemaName = true;

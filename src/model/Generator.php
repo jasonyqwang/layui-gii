@@ -53,7 +53,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getName()
     {
-        return 'Model Generator';
+        return '自动继承Model生成器';
     }
 
     /**

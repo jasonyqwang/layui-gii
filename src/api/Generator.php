@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace Jsyqw\Layuigii\crud;
+namespace Jsyqw\Layuigii\api;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -32,30 +32,16 @@ use yii\web\Controller;
  */
 class Generator extends \yii\gii\Generator
 {
-    public $modelClass;
-    public $controllerClass;
-    public $viewPath;
-    public $baseControllerClass = 'yii\web\Controller';
-    public $indexWidgetType = 'grid';
-    public $searchModelClass = '';
-    /**
-     * @var bool whether to wrap the `GridView` or `ListView` widget with the `yii\widgets\Pjax` widget
-     * @since 2.0.5
-     */
-    public $enablePjax = false;
-    /**
-     * @var bool whether to use strict inflection for controller IDs (insert a separator between two consecutive uppercase chars)
-     * @since 2.1.0
-     */
-    public $strictInflector = true;
-
+    public $modelClass = 'app\models\XX';
+    public $controllerClass = 'app\modules\api\controllers\XXXController';
+    public $baseControllerClass = 'app\core\controllers\BaseApiController';
 
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-        return 'Layui增删改查生成器';
+        return '接口生成器';
     }
 
     /**
@@ -63,8 +49,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getDescription()
     {
-        return 'This generator generates a controller and views that implement CRUD (Create, Read, Update, Delete)
-            operations for the specified data model.';
+        return '根据模型。自动生成 增、删、改、查 的接口';
     }
 
     /**
@@ -73,20 +58,14 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['controllerClass', 'modelClass', 'searchModelClass', 'baseControllerClass'], 'filter', 'filter' => 'trim'],
-            [['modelClass', 'controllerClass', 'baseControllerClass', 'indexWidgetType'], 'required'],
-            [['searchModelClass'], 'compare', 'compareAttribute' => 'modelClass', 'operator' => '!==', 'message' => 'Search Model Class must not be equal to Model Class.'],
-            [['modelClass', 'controllerClass', 'baseControllerClass', 'searchModelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
+            [['controllerClass', 'modelClass', 'baseControllerClass'], 'filter', 'filter' => 'trim'],
+            [['modelClass', 'controllerClass', 'baseControllerClass'], 'required'],
+            [['modelClass', 'controllerClass', 'baseControllerClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
             [['modelClass'], 'validateClass', 'params' => ['extends' => BaseActiveRecord::className()]],
             [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::className()]],
             [['controllerClass'], 'match', 'pattern' => '/Controller$/', 'message' => 'Controller class name must be suffixed with "Controller".'],
             [['controllerClass'], 'match', 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Controller$/', 'message' => 'Controller class name must start with an uppercase letter.'],
-            [['controllerClass', 'searchModelClass'], 'validateNewClass'],
-            [['indexWidgetType'], 'in', 'range' => ['grid', 'list']],
             [['modelClass'], 'validateModelClass'],
-            [['enableI18N', 'enablePjax'], 'boolean'],
-            [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
-            ['viewPath', 'safe'],
         ]);
     }
 
@@ -96,13 +75,9 @@ class Generator extends \yii\gii\Generator
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
-            'modelClass' => 'Model Class',
-            'controllerClass' => 'Controller Class',
-            'viewPath' => 'View Path',
-            'baseControllerClass' => 'Base Controller Class',
-            'indexWidgetType' => 'Widget Used in Index Page',
-            'searchModelClass' => 'Search Model Class',
-            'enablePjax' => 'Enable Pjax',
+            'modelClass' => '模型类名',
+            'controllerClass' => '控制器名称',
+            'baseControllerClass' => '控制器基类'
         ]);
     }
 
@@ -112,24 +87,9 @@ class Generator extends \yii\gii\Generator
     public function hints()
     {
         return array_merge(parent::hints(), [
-            'modelClass' => 'This is the ActiveRecord class associated with the table that CRUD will be built upon.
-                You should provide a fully qualified class name, e.g., <code>app\models\Post</code>.',
-            'controllerClass' => 'This is the name of the controller class to be generated. You should
-                provide a fully qualified namespaced class (e.g. <code>app\controllers\PostController</code>),
-                and class name should be in CamelCase with an uppercase first letter. Make sure the class
-                is using the same namespace as specified by your application\'s controllerNamespace property.',
-            'viewPath' => 'Specify the directory for storing the view scripts for the controller. You may use path alias here, e.g.,
-                <code>/var/www/basic/controllers/views/post</code>, <code>@app/views/post</code>. If not set, it will default
-                to <code>@app/views/ControllerID</code>',
-            'baseControllerClass' => 'This is the class that the new CRUD controller class will extend from.
-                You should provide a fully qualified class name, e.g., <code>yii\web\Controller</code>.',
-            'indexWidgetType' => 'This is the widget type to be used in the index page to display list of the models.
-                You may choose either <code>GridView</code> or <code>ListView</code>',
-            'searchModelClass' => 'This is the name of the search model class to be generated. You should provide a fully
-                qualified namespaced class name, e.g., <code>app\models\PostSearch</code>.',
-            'enablePjax' => 'This indicates whether the generator should wrap the <code>GridView</code> or <code>ListView</code>
-                widget on the index page with <code>yii\widgets\Pjax</code> widget. Set this to <code>true</code> if you want to get
-                sorting, filtering and pagination without page refreshing.',
+            'modelClass' => '模型类，需要提供包含命名空间的类, e.g., <code>app\models\User</code>.',
+            'controllerClass' => '控制器类名，需要提供包含命名空间的类 (e.g. <code>app\controllers\PostController</code>)',
+            'baseControllerClass' => '控制器基类，上面的控制器会继承当前的控制器，需要提供包含命名空间的类, e.g., <code>yii\web\Controller</code>.',
         ]);
     }
 
@@ -146,7 +106,7 @@ class Generator extends \yii\gii\Generator
      */
     public function stickyAttributes()
     {
-        return array_merge(parent::stickyAttributes(), ['baseControllerClass', 'indexWidgetType']);
+        return array_merge(parent::stickyAttributes(), ['baseControllerClass']);
     }
 
     /**
@@ -173,22 +133,6 @@ class Generator extends \yii\gii\Generator
             new CodeFile($controllerFile, $this->render('controller.php')),
         ];
 
-        if (!empty($this->searchModelClass)) {
-            $searchModel = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->searchModelClass, '\\') . '.php'));
-            $files[] = new CodeFile($searchModel, $this->render('search.php'));
-        }
-
-        $viewPath = $this->getViewPath();
-        $templatePath = $this->getTemplatePath() . '/views';
-        foreach (scandir($templatePath) as $file) {
-            if (empty($this->searchModelClass) && $file === '_search.php') {
-                continue;
-            }
-            if (is_file($templatePath . '/' . $file) && pathinfo($file, PATHINFO_EXTENSION) === 'php') {
-                $files[] = new CodeFile("$viewPath/$file", $this->render("views/$file"));
-            }
-        }
-
         return $files;
     }
 
@@ -201,18 +145,6 @@ class Generator extends \yii\gii\Generator
         $class = substr(substr($this->controllerClass, $pos + 1), 0, -10);
 
         return Inflector::camel2id($class, '-', $this->strictInflector);
-    }
-
-    /**
-     * @return string the controller view path
-     */
-    public function getViewPath()
-    {
-        if (empty($this->viewPath)) {
-            return Yii::getAlias('@app/views/' . $this->getControllerID());
-        }
-
-        return Yii::getAlias(str_replace('\\', '/', $this->viewPath));
     }
 
     /**

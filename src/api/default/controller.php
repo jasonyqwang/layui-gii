@@ -61,7 +61,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $list = $dataProvider->getModels();
 
         $result = [
-            'list' => $list,
+            'lists' => $list,
             'total' => $dataProvider->getTotalCount(),
         ];
 

@@ -94,8 +94,8 @@
     filter[user_id][in][]:2
     filter[city_id][nin][]:100
     filter[city_id][nin][]:101
-    filter[create_time][gt]:2020-05-08 11:34:23
-    filter[create_time][lte]:2020-10-08 11:34:23
+    filter[create_time][gt]:2020-01-01 11:34:23
+    filter[create_time][lte]:2020-01-01 11:34:23
     filter[gender][neq]:男
     filter[or][][status][eq]:1
     filter[or][][name][eq]:王五
@@ -125,37 +125,53 @@
 ```
 
 
-### 2.由JSON自动转成查询方式（根据源码分析的结果，没有实践）
+### 2.由JSON自动转成查询方式
 
 #### 2.1 JSON格式如下
 ```json
     {
         "page": 1,
         "per-page": 10,
-        "filter": {
-            "or": [{
-                "and": [{
-                    "name": "张三"
-                }, {
-                    "age": "25"
-                }]
-            }, {
-                "id": {
-                    "in": [2, 5, 9]
-                },
-                "price": {
-                    "gt": 10,
-                    "lt": 50
-                }
-            }]
-        }
+        "filter": [
+            "AND",
+            {
+                "status": ""
+            },
+            [
+                "LIKE",
+                "name",
+                "老王"
+            ],
+            [
+                "LIKE",
+                "contact_name",
+                ""
+            ],
+            [
+                "LIKE",
+                "contact_phone",
+                ""
+            ],
+             [
+                "in",
+                "id",
+                [2,4]
+            ],
+            [
+                ">=",
+                "create_time",
+                "2020-01-01 11:34:23"
+            ]
+        ]
     }
 ```
     
 #### 2.2 PHP处理JSON的表单
 ```php
-  $dataFilter = new DataFilter();
-  $dataFilter->load(Yii::$app->request->getBodyParams());
-  //构造出查询调价
-  $filterCondition = $dataFilter->build(false);
+  $body = \Yii::$app->request->getRawBody();
+  $body = json_decode($body, true);
+  
+  $filterCondition = $body['filter'];
+  
+  $query->andFilterWhere($filterCondition);
 ```

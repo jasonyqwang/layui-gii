@@ -47,6 +47,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     * @return array
     */
     public function actionIndex(){
+        $reqData = RequestHelper::get();
 
         $query = <?= $modelClass ?>::find();
         $query->orderBy('id desc');

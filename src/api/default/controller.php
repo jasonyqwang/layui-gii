@@ -29,6 +29,7 @@ use Yii;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use app\core\db\ActiveDataProvider;
+use app\core\filters\ActiveDataFilter;
 use app\core\helpers\RequestHelper;
 use app\core\validate\ParamsValidate;
 
@@ -54,18 +55,24 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         }
         $query->orderBy('id desc');
 
+        $dataFilter = new ActiveDataFilter([
+            'searchModel' => <?= $modelClass ?>::className()
+        ]);
+
+        $dataFilter->load($reqData);
+
+        $filterCondition = $dataFilter->build(false);
+        $query->andFilterWhere($filterCondition);
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
-        $list = $dataProvider->getModels();
+        $lists = $dataProvider->getModels();
 
         $result = [
-            'lists' => $list,
+            'lists' => $lists,
             'total' => $dataProvider->getTotalCount(),
         ];
-
-        return $this->success($result);
     }
 
     /**

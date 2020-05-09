@@ -110,7 +110,7 @@ eg：
             // uncomment the following to add your IP if you are not connecting from localhost.
             //'allowedIPs' => ['127.0.0.1', '::1'],
             'generators' => [
-                'crud' => [ //生成器名称
+                'layuiCrud' => [ //生成器名称
                     'class' => 'Jsyqw\Layuigii\crud\Generator',
                     'templates' => [ //设置我们自己的模板
                         //模板名 => 模板路径
@@ -123,6 +123,9 @@ eg：
                         //模板名 => 模板路径
                         'layuiModel' => '@vendor/layui-gii/src/model/default',
                     ]
+                ],
+                'api' => [ //生成器名称
+                    'class' => 'Jsyqw\Layuigii\api\Generator',
                 ]
             ],
         ];

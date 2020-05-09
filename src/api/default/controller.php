@@ -95,7 +95,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
         $model->save();
         if($model->hasErrors()){
-            $this->error($model->getFirstErrorMsg());
+            return $this->error($model->getFirstErrorMsg());
         }
         return $this->success($model->toArray());
     }
@@ -121,7 +121,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
         $model->save();
         if($model->hasErrors()){
-            $this->error($model->getFirstErrorMsg());
+            return $this->error($model->getFirstErrorMsg());
         }
         return $this->success($model);
     }
@@ -156,7 +156,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $model->update_time = date('Y-m-d H:i:s');
         $model->save();
         if($model->hasErrors()){
-            $this->error($model->getFirstErrorMsg());
+            return $this->error($model->getFirstErrorMsg());
         }
         return $this->success();
     }

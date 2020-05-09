@@ -49,10 +49,6 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     public function actionIndex(){
 
         $query = <?= $modelClass ?>::find();
-        //条件
-        if(!empty($reqData['name'])){
-            $query->andWhere(['like', 'name', $reqData['name']]);
-        }
         $query->orderBy('id desc');
 
         $dataFilter = new ActiveDataFilter([

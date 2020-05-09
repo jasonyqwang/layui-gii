@@ -73,6 +73,8 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             'lists' => $lists,
             'total' => $dataProvider->getTotalCount(),
         ];
+
+        return $this->success($result);
     }
 
     /**

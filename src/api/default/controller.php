@@ -64,10 +64,10 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        $lists = $dataProvider->getModels();
+        $list = $dataProvider->getModels();
 
         $result = [
-            'lists' => $lists,
+            'list' => $list,
             'total' => $dataProvider->getTotalCount(),
         ];
 

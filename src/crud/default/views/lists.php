@@ -1,4 +1,4 @@
-<form class="layui-form">
+<div class="header">
     <blockquote class="layui-elem-quote quoteBox">
         <form class="layui-form">
             <div class="layui-inline">
@@ -18,7 +18,7 @@
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
     </script>
-</form>
+</div>
 
 <script type="text/javascript">
 

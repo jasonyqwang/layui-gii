@@ -18,6 +18,27 @@
 .magt30{ margin-top:30px !important;}
 .magb15{ margin-bottom:15px !important;}
 
+.view-content{
+
+}
+.view-row{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: stretch;
+    border: 1px solid #e6e6e6;
+    margin-bottom: 2px;
+}
+.view-row-title{
+    text-align: right;
+    background-color: #f2f2f2;
+    font-size: 16px;
+    padding: 5px;
+}
+.view-row-content{
+    padding: 5px;
+}
+
 .layui-left{text-align:left;}
 .layui-block{ width:100% !important;}
 .layui-center{text-align:center;}

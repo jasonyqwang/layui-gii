@@ -133,22 +133,14 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     */
     public function actionView()
     {
-        if(!RequestHelper::instance()->isAjax){
-            $id = RequestHelper::get('id');
-            $model = <?= $modelClass ?>::find()->where([
-                'id' => $id
-            ])->one();
-
-            return $this->render('view',[
-                'model' => $model
-            ]);
-        }
         $id = RequestHelper::get('id');
         $model = <?= $modelClass ?>::find()->where([
             'id' => $id
         ])->one();
 
-        return $this->success($model->toArray());
+        return $this->render('view',[
+            'model' => $model
+        ]);
     }
 
     /**

@@ -1,9 +1,9 @@
 <div class="header">
     <blockquote class="layui-elem-quote quoteBox">
-        <form class="layui-form">
+        <form class="layui-form" id="searchForm">
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input searchVal" placeholder="请输入搜索的内容" />
+                    <input type="text"  name="key" class="layui-input" placeholder="请输入搜索的内容" />
                 </div>
                 <a class="layui-btn searchBtn" data-type="reload">搜索</a>
             </div>
@@ -81,9 +81,12 @@ ITEM;
             })
         });
         function searchWhere(){
-            return {
-                key: $(".searchVal").val(),
-            };
+            var arr = $('#searchForm').serializeArray();
+            let where = [];
+            arr.forEach((item, index) => {
+                where[item.name] = item.value
+            })
+            return where;
         }
 
         //添加

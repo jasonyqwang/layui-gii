@@ -19,7 +19,7 @@
 .magb15{ margin-bottom:15px !important;}
 
 .view-content{
-
+    overflow-y: auto;
 }
 .view-row{
     display: flex;

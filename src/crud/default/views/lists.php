@@ -5,7 +5,12 @@
                 <div class="layui-input-inline">
                     <input type="text"  name="key" class="layui-input" placeholder="请输入搜索的内容" />
                 </div>
+            </div>
+            <div class="layui-inline">
                 <a class="layui-btn searchBtn" data-type="reload">搜索</a>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn layui-btn-normal" type="reset">重置</button>
             </div>
             <div class="layui-inline">
                 <a class="layui-btn layui-btn-normal addBtn">添加</a>

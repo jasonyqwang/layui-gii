@@ -33,6 +33,7 @@ use Yii;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use app\core\helpers\RequestHelper;
+use app\core\db\ActiveDataProvider;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
@@ -41,26 +42,26 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 {
     /**
     * 列表
+    * 分页： page（第几页） limit（每页个数）
     * @return array
     */
     public function actionLists(){
         if(!RequestHelper::instance()->isAjax){
             return $this->render('lists');
         }
-        $currentPage = RequestHelper::get('page', 1);
-        $pageSize = RequestHelper::get('limit', 10);
-        $key = RequestHelper::get('key', '');
-        $offset = ($currentPage - 1) * $pageSize;
+        $key = RequestHelper::get('key');
 
         $query = <?= $modelClass ?>::find();
-        if($key){
-            //$query->andWhere('name like :name', [':name' => "%$key%"]);
-        }
-        $total = $query->count();
-        $lists = $query->limit($pageSize)
-        ->offset($offset)
-        ->asArray()
-        ->all();
+        //$query->andFilterWhere(['like', 'name', $key]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageParam' => 'page',
+                'pageSizeParam' => 'limit'
+            ]
+        ]);
+        $lists = $dataProvider->getModels();
+        $total = $dataProvider->getTotalCount();
 
         return $this->success([
             'lists' => $lists,

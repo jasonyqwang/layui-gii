@@ -43,6 +43,8 @@
 
 ```html
     {{baseUrl}}?filter[status]=0&filter[name][like]=aa&filter[id][in][]=1&filter[id][in][]=2&filter[create_time][gt]=2020-05-08%2011:34:23&page=1&per-page=10
+    //由于前端在拼装 in 查询的时候比较麻烦；所以【in】支持 逗号分隔的查询模式，如下:
+    {{baseUrl}}?filter[id][in][]=2,3,10
 ```
 
     

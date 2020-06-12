@@ -28,6 +28,7 @@ namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>
 use Yii;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
+use app\core\db\Query;
 use app\core\db\ActiveDataProvider;
 use app\core\filters\ActiveDataFilter;
 use app\core\helpers\RequestHelper;
@@ -48,9 +49,9 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     */
     public function actionIndex(){
         $reqData = RequestHelper::get();
-
-        $query = <?= $modelClass ?>::find();
-        $query->orderBy('id desc');
+        $query = new Query();
+        $query->select(['t.*']);
+        $query->from(<?= $modelClass ?>::tableName() . ' t');
 
         $dataFilter = new ActiveDataFilter([
             'searchModel' => <?= $modelClass ?>::className()
@@ -60,15 +61,17 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
         $filterCondition = $dataFilter->build(false);
         $query->andFilterWhere($filterCondition);
+        $query->orderBy('id desc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
         $list = $dataProvider->getModels();
+        $total = $dataProvider->getTotalCount();
 
         $result = [
             'list' => $list,
-            'total' => $dataProvider->getTotalCount(),
+            'total' => $total,
         ];
 
         return $this->success($result);

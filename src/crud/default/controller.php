@@ -33,6 +33,7 @@ use Yii;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use app\core\helpers\RequestHelper;
+use app\core\db\Query;
 use app\core\db\ActiveDataProvider;
 
 /**
@@ -51,8 +52,13 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         }
         $key = RequestHelper::get('key');
 
-        $query = <?= $modelClass ?>::find();
-        //$query->andFilterWhere(['like', 'name', $key]);
+        $query = new Query();
+        $query->select(['t.*']);
+        $query->from(<?= $modelClass ?>::tableName() . ' t');
+
+        //$query->andFilterWhere(['like', 't.name', $key]);
+        $query->orderBy('t.id desc');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [

@@ -41,12 +41,12 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 {
 
     /**
-    * 列表
-    * 默认分页参数
-    *      每页条数：per-page
-    *      第几页： page
-    * @return array
-    */
+     * 列表
+     * 默认分页参数
+     *      每页条数：per-page
+     *      第几页： page
+     * @return array
+     */
     public function actionIndex(){
         $reqData = RequestHelper::get();
         $query = new Query();
@@ -61,7 +61,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
         $filterCondition = $dataFilter->build(false);
         $query->andFilterWhere($filterCondition);
-        $query->orderBy('id desc');
+        $query->orderBy('t.id desc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -78,9 +78,9 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     }
 
     /**
-    * 创建
-    * @return array
-    */
+     * 创建
+     * @return array
+     */
     public function actionCreate()
     {
         $reqData = RequestHelper::post();
@@ -105,9 +105,9 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
 
     /**
-    * 修改
-    * @return array
-    */
+     * 修改
+     * @return array
+     */
     public function actionUpdate()
     {
         $reqData = RequestHelper::post();
@@ -119,6 +119,9 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             return $error;
         }
         $model = <?= $modelClass ?>::findOne($reqData['id']);
+        if(!$model){
+            return $this->error('信息不存在');
+        }
         $model->load($reqData);
         $model->update_time = date('Y-m-d H:i:s');
 
@@ -130,8 +133,10 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     }
 
     /**
-    * 详情
-    */
+     * 详情
+     * @param $id
+     * @return array
+     */
     public function actionView($id)
     {
         $model = <?= $modelClass ?>::findOne($id);
@@ -142,8 +147,8 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     }
 
     /**
-    * 删除
-    */
+     * 删除
+     */
     public function actionDelete()
     {
         $id = RequestHelper::post('id');
